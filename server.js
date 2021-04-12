@@ -16,3 +16,4 @@ routesReport.print()
 })
 
 app.use('/user', userRoutes)
+app.use('/city', cityRoutes)
