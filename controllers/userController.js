@@ -32,5 +32,57 @@ userController.login = async(req,res) => {
     }
 }
 
+userController.delete = async(req,res) => {
+    try {
+        let user = await models.user.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        await user.destroy()
+
+        res.json({ message: 'user deleted'}) 
+    } catch (error) {
+        res.json({error})
+    }
+}
+userController.getCities = async (req,res) => {
+    try {
+        let user = await models.user.findOne({
+            where: {
+                id: req.params.userId
+            }
+        })
+        let cities = await user.getCities()
+        console.log('cities', cities)
+        res.json({
+            cities
+        })
+    } catch (error) {
+        res.json({error})
+    }
+
+}
+
+userController.deleteCity = async (req,res) => {
+   
+    try {
+        let user = await models.user.findOne({
+            where: {
+                id: req.params.userId
+            }
+        })
+        let city = await models.city.findOne({
+            where: {
+                id: req.params.cityId
+            }
+        })
+        console.log(city)
+        await user.removeCity(city)
+        res.json({message: 'deleted'})
+    } catch (error) {
+        res.json({error})
+    }
+}
 
 module.exports = userController
